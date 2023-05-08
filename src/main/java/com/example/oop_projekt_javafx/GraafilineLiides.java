@@ -40,6 +40,9 @@ public class GraafilineLiides extends Application {
     public void start(Stage primaryStage) throws FileNotFoundException {
         this.primaryStage = primaryStage;
 
+        showKüsiVäärtused();
+    }
+    private void showKüsiVäärtused() {
         VBox vBox = new VBox();
         Scene scene = new Scene(vBox, 400, 400);
 
@@ -71,18 +74,6 @@ public class GraafilineLiides extends Application {
         primaryStage.show();
     }
 
-    private void showMäng(){
-        VBox vBox = new VBox();
-        Scene scene = new Scene(vBox,400,400);
-
-        Label label = new Label("Mäng algas!" + "\n" + "Vasakul on sinu laevad | Paremal on vaenlase laevad");
-
-        vBox.getChildren().add(label);
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
     private void showPaatidePaigutus() throws FileNotFoundException {
         // Create the next scene
         VBox vBox = new VBox();
@@ -109,6 +100,18 @@ public class GraafilineLiides extends Application {
             }
         });
         vBox.getChildren().add(button2);
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private void showMäng(){
+        VBox vBox = new VBox();
+        Scene scene = new Scene(vBox,400,400);
+
+        Label label = new Label("Mäng algas!" + "\n" + "Vasakul on sinu laevad | Paremal on vaenlase laevad");
+
+        vBox.getChildren().add(label);
 
         primaryStage.setScene(scene);
         primaryStage.show();
