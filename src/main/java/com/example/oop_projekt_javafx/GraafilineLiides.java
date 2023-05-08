@@ -22,10 +22,12 @@ public class GraafilineLiides extends Application {
     private Stage inputStage;
     private int väljaSuurus;
     private int paatideArv;
+    private int abiPaatideArv;
     private final int MAX_ROWS = 10;
     private final int MAX_COLS = 10;
     private GridPane playerGridPane;
-
+    private MänguVäli playerBooleanGrid;
+    private MänguVäli pcBooleanGrid;
     private boolean playerRuudustik = false;
 
     public GraafilineLiides() throws FileNotFoundException {
@@ -60,6 +62,7 @@ public class GraafilineLiides extends Application {
             Button button2 = new Button("Start game!");
             button2.setOnAction(r -> {
                 paatideArv = Integer.parseInt(field2.getText());
+                abiPaatideArv = paatideArv;
                 try {
                     showPaatidePaigutus();
                 } catch (FileNotFoundException ex) {
@@ -80,16 +83,15 @@ public class GraafilineLiides extends Application {
         Scene scene = new Scene(vBox, 400, 400);
 
         Label label = new Label("Nüüd pead paigutama paadid oma väljale!" + "\n" +
-                "Paatide paigutamiseks kliki väljal (paate veel paigutada: " + paatideArv + "): ");
+                "Paatide paigutamiseks kliki väljal (paate veel paigutada: " + abiPaatideArv + "): ");
         if (!playerRuudustik) {
             playerGridPane = ruudustik(väljaSuurus, väljaSuurus);
-            playerRuudustik = true;
         }
         vBox.getChildren().addAll(label, playerGridPane);
 
         Button button2 = new Button("OK");
         button2.setOnAction(e -> {
-            if (paatideArv>0) {
+            if (abiPaatideArv>0) {
                 try {
                     showPaatidePaigutus();
                 } catch (FileNotFoundException ex) {
@@ -125,7 +127,10 @@ public class GraafilineLiides extends Application {
         // Create the GridPane for the matrix
         GridPane gridPane = new GridPane();
 
-        MänguVäli player = new MänguVäli(new boolean[väljaSuurus][väljaSuurus]);
+        if (!playerRuudustik) {
+            playerBooleanGrid = new MänguVäli(new boolean[väljaSuurus][väljaSuurus]);
+            playerRuudustik = true;
+        }
 
         gridPane.setMaxSize(50 * numCols, 50 * numRows);
 
@@ -138,9 +143,9 @@ public class GraafilineLiides extends Application {
                 imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        if (paatideArv>0) {
-                            paatideArv--;
-                            player.lisaPaat(GridPane.getRowIndex(imageView), GridPane.getColumnIndex(imageView));
+                        if (abiPaatideArv>0) {
+                            abiPaatideArv--;
+                            playerBooleanGrid.lisaPaat(GridPane.getRowIndex(imageView), GridPane.getColumnIndex(imageView));
                             System.out.println("You clicked on the square at row " + GridPane.getRowIndex(imageView) +
                                     " and column " + GridPane.getColumnIndex(imageView));
                             ImageView clickedImageView = (ImageView) event.getSource();
