@@ -3,14 +3,28 @@ package com.example.oop_projekt_javafx;
 import javafx.scene.image.Image;
 
 public class KuvaVäli extends Väli {
-    private final String[][] Väli;
+    private String[][] väli;
 
     public KuvaVäli(String[][] Väli) {
-        this.Väli = Väli;
+        this.väli = Väli;
+    }
+
+    public KuvaVäli(boolean[][] väli){
+        String[][] uus = new String[väli.length][väli.length];
+        for (int i = 0; i < väli.length; i++) {
+            for (int j = 0; j < väli.length; j++) {
+                uus[i][j] = ".";
+            }
+        }
+        this.väli = uus;
     }
 
     public String[][] getVäli() {
-        return Väli;
+        return väli;
+    }
+
+    public void setVäli(String[][] v) {
+        this.väli = v;
     }
 
     public void uuendaVäli(int i, int j, boolean pihtas) {
@@ -35,4 +49,5 @@ public class KuvaVäli extends Väli {
         }
         return tabamused;
     }
+
 }

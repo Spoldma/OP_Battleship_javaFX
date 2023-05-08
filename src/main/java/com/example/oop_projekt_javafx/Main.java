@@ -62,7 +62,6 @@ public class Main {
                     väli[random1][random2] = true;
                     break;
                 }
-
             }
         }
         return väli;

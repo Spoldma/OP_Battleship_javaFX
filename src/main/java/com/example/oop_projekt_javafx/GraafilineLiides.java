@@ -2,7 +2,6 @@ package com.example.oop_projekt_javafx;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,19 +22,11 @@ public class GraafilineLiides extends Application {
     private Stage inputStage;
     private int väljaSuurus;
     private int paatideArv;
-    private int abiPaatideArv;
-    private int playerPaateJärel;
-    private int pcPaateJärel;
     private final int MAX_ROWS = 10;
     private final int MAX_COLS = 10;
     private GridPane playerGridPane;
-    private GridPane pcGridPane;
-    private MänguVäli playerBooleanGrid;
-    private MänguVäli pcBooleanGrid;
-    private KuvaVäli playerStringGrid;
-    private KuvaVäli pcStringGrid;
+
     private boolean playerRuudustik = false;
-    private boolean pcRuudustik = false;
 
     public GraafilineLiides() throws FileNotFoundException {
     }
@@ -50,7 +41,6 @@ public class GraafilineLiides extends Application {
         this.primaryStage = primaryStage;
 
         showKüsiVäärtused();
-
     }
     private void showKüsiVäärtused() {
         VBox vBox = new VBox();
@@ -118,60 +108,16 @@ public class GraafilineLiides extends Application {
     private void showMäng(){
         VBox vBox = new VBox();
         Scene scene = new Scene(vBox,400,400);
-        try {
-            pcGridPane = arvutiRuudustik(väljaSuurus, väljaSuurus);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        Label label = new Label("Mäng algas!" + "\n" + "Vasakul on sinu laevad | Paremal on vaenlase laevad");
-        try {
-            lasePlayer();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        vBox.getChildren().addAll(label, playerGridPane, pcGridPane);
 
-        vBox.setSpacing(10);
-        vBox.setPadding(new Insets(10));
+        Label label = new Label("Mäng algas!" + "\n" + "Vasakul on sinu laevad | Paremal on vaenlase laevad");
+
+        vBox.getChildren().add(label);
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    public GridPane arvutiRuudustik(int numRows,int numCols) throws FileNotFoundException {
-        Image algne = new Image(new FileInputStream("IMG_0123.PNG"));
-        GridPane gridPane = new GridPane();
-        MänguVäli pc = new MänguVäli(teeVäliBoolean(väljaSuurus, paatideArv));
-        for (int row = 0; row < numRows; row++) {
-            for (int col = 0; col < numCols; col++) {
-                ImageView imageView = new ImageView(algne);
-                imageView.setFitWidth(50);
-                imageView.setFitHeight(50);
-                gridPane.add(imageView, col, row);
-            }
-        }
-        return gridPane;
-    }
-    public static boolean[][] teeVäliBoolean(int n, int laevu) {
-        boolean[][] väli = new boolean[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                väli[i][j] = false;
-            }
-        }
-        for (int i = 1; i <= laevu; i++) {
-            while (true) {
-                int random1 = (int) (Math.random() * (n));
-                int random2 = (int) (Math.random() * (n));
-                if (!väli[random1][random2]) {
-                    väli[random1][random2] = true;
-                    break;
-                }
 
-            }
-        }
-        return väli;
-    }
-
-        public GridPane ruudustik(int numRows,int numCols) throws FileNotFoundException {
+    public GridPane ruudustik(int numRows,int numCols) throws FileNotFoundException {
         Image algne = new Image(new FileInputStream("IMG_0123.PNG"));
         Image pihtas = new Image(new FileInputStream("IMG_0124.PNG"));
         Image möödas = new Image(new FileInputStream("IMG_0125.PNG"));
@@ -214,37 +160,5 @@ public class GraafilineLiides extends Application {
         return gridPane;
     }
 
-    public void lasePlayer() throws FileNotFoundException {
-        Image möödas = new Image(new FileInputStream("IMG_0125.PNG"));
-        Image pihtas = new Image(new FileInputStream("IMG_0126.PNG"));
-        ImageView imageViewM = new ImageView(möödas);
-        imageViewM.setFitWidth(50);
-        imageViewM.setFitHeight(50);
-        ImageView imageViewP = new ImageView(pihtas);
-        imageViewP.setFitWidth(50);
-        imageViewP.setFitHeight(50);
-        pcGridPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                ImageView vajutatudPilt = (ImageView) event.getSource();
-                int rida = GridPane.getRowIndex(vajutatudPilt);
-                int veerg = GridPane.getColumnIndex(vajutatudPilt);
-                System.out.println(rida + veerg);
-                if (pcStringGrid.getVäli()[rida][veerg].equals(".")) {
-                    if (pcBooleanGrid.pihtaMööda(rida, veerg)) {
-                        pcStringGrid.uuendaVäli(rida, veerg, true);
-                        System.out.println("Vaenlane lasi pihta!");
-                        pcGridPane.add(imageViewP, veerg, rida);
-                        pcPaateJärel--;
-                    } else {
-                        pcStringGrid.uuendaVäli(rida, veerg, false);
-                        System.out.println("Vaenlane lasi mööda!");
-                        playerGridPane.add(imageViewM, veerg, rida);
-                    }
-
-                }
-            }
-        });
-    }
 
 }
