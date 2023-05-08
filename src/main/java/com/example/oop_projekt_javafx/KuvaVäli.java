@@ -1,4 +1,7 @@
 package com.example.oop_projekt_javafx;
+
+import javafx.scene.image.Image;
+
 public class KuvaVäli extends Väli {
     private final String[][] Väli;
 

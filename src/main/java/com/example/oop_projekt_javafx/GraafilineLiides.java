@@ -41,6 +41,7 @@ public class GraafilineLiides extends Application {
         this.primaryStage = primaryStage;
 
         showKüsiVäärtused();
+
     }
     private void showKüsiVäärtused() {
         VBox vBox = new VBox();
