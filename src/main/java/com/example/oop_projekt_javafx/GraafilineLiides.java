@@ -9,17 +9,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 
-public class GraagilineLiides extends Application {
+public class GraafilineLiides extends Application {
 
     private Stage primaryStage;
     private Stage inputStage;
@@ -31,7 +28,7 @@ public class GraagilineLiides extends Application {
 
     private boolean playerRuudustik = false;
 
-    public GraagilineLiides() throws FileNotFoundException {
+    public GraafilineLiides() throws FileNotFoundException {
     }
 
 
