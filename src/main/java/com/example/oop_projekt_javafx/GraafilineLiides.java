@@ -2,6 +2,7 @@ package com.example.oop_projekt_javafx;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -50,6 +51,7 @@ public class GraafilineLiides extends Application {
         showKüsiVäärtused();
 
     }
+
     private void showKüsiVäärtused() {
         VBox vBox = new VBox();
         Scene scene = new Scene(vBox, 400, 400);
@@ -96,7 +98,7 @@ public class GraafilineLiides extends Application {
 
         Button button2 = new Button("OK");
         button2.setOnAction(e -> {
-            if (abiPaatideArv>0) {
+            if (abiPaatideArv > 0) {
                 try {
                     showPaatidePaigutus();
                 } catch (FileNotFoundException ex) {
@@ -112,7 +114,7 @@ public class GraafilineLiides extends Application {
         primaryStage.show();
     }
 
-    private void showMäng(){
+    private void showMäng() {
         if (!pcRuudustik) {
             pcBooleanGrid = new MänguVäli(teeVäliBoolean(väljaSuurus, paatideArv));
             pcStringGrid = new KuvaVäli(pcBooleanGrid.getVäli());
@@ -120,48 +122,60 @@ public class GraafilineLiides extends Application {
             pcRuudustik = true;
         }
         VBox vBox = new VBox();
-        Scene scene = new Scene(vBox,400,400);
-
+        Scene scene = new Scene(vBox, 400, 400);
+        try {
+            pcGridPane = arvutiRuudustik(väljaSuurus, väljaSuurus);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         Label label = new Label("Mäng algas!" + "\n"
-                + "Üleval on sinu laevad(" + playerPaateJärel + " veel alles) | All on vaenlase laevad (" + pcPaateJärel + " veel alles)");
-        Button button = new Button("Järgmine käik");
-        button.setOnAction(r -> {
-            if (playerPaateJärel>0) {
-                try {
-                    lasePC();
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-                showMäng();
-            } else {
-                showEnd();
-            }
-        });
-        vBox.getChildren().addAll(label,button,playerGridPane);
+                + "Üleval on sinu laevad(" + playerPaateJärel + " veel alles) | All on vaenlase laevad (" + pcPaateJärel + " veel alles)"); //ei tööta
+        vBox.getChildren().addAll(label, playerGridPane, pcGridPane);
+        vBox.setSpacing(10);
 
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        // Call lasePlayer to allow the player to take a shot
+        try {
+            lasePlayer();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void showEnd(){
+    private void showEndPC() {
         VBox vBox = new VBox();
-        Scene scene = new Scene(vBox,400,400);
-        Label label = new Label("Mäng läbi!"+"\n"+"PC võitis!");
+        Scene scene = new Scene(vBox, 400, 400);
+        Label label = new Label("Mäng läbi," + "\n" + "võitis Arvuti!");
         Button button = new Button("Mängi uuesti?");
         button.setOnAction(r -> {
             pcRuudustik = false;
             playerRuudustik = false;
             showKüsiVäärtused();
         });
-        vBox.getChildren().addAll(label,button);
+        vBox.getChildren().addAll(label, button);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    private void showEndPlayer() {
+        VBox vBox = new VBox();
+        Scene scene = new Scene(vBox, 400, 400);
+        Label label = new Label("Mäng läbi," + "\n" + "võitsid Sina!");
+        Button button = new Button("Mängi uuesti?");
+        button.setOnAction(r -> {
+            pcRuudustik = false;
+            playerRuudustik = false;
+            showKüsiVäärtused();
+        });
+        vBox.getChildren().addAll(label, button);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    private GridPane ruudustik(int numRows,int numCols) throws FileNotFoundException {
+    private GridPane ruudustik(int numRows, int numCols) throws FileNotFoundException {
         Image algne = new Image(new FileInputStream("IMG_0123.PNG"));
         Image pihtas = new Image(new FileInputStream("IMG_0124.PNG"));
-        Image möödas = new Image(new FileInputStream("IMG_0125.PNG"));
 
         // Create the GridPane for the matrix
         GridPane gridPane = new GridPane();
@@ -181,7 +195,7 @@ public class GraafilineLiides extends Application {
                 imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        if (abiPaatideArv>0) {
+                        if (abiPaatideArv > 0) {
                             if (!playerBooleanGrid.getVäli()[GridPane.getRowIndex(imageView)][GridPane.getColumnIndex(imageView)]) {
                                 abiPaatideArv--;
                                 playerBooleanGrid.lisaPaat(GridPane.getRowIndex(imageView), GridPane.getColumnIndex(imageView));
@@ -221,21 +235,13 @@ public class GraafilineLiides extends Application {
             int veerg = (int) (Math.random() * väljaSuurus);
             if (playerStringGrid.getVäli()[rida][veerg].equals(".")) {
                 if (playerBooleanGrid.pihtaMööda(rida, veerg)) {
-                    //playerBooleanGrid.eemaldaPaat(rida, veerg);
-                    //String[][] uus = playerStringGrid.getVäli();
-                    //uus[rida][veerg] = "X";
-                    //playerStringGrid.setVäli(uus);
-                    playerStringGrid.uuendaVäli(rida,veerg,true);
+                    playerStringGrid.uuendaVäli(rida, veerg, true);
                     System.out.println("Vaenlane lasi pihta!");
                     playerGridPane.add(imageViewP, veerg, rida);
                     playerPaateJärel--;
                     break;
                 } else {
-                    //playerBooleanGrid.lisaPaat(rida, veerg);
-                    //String[][] uus = playerStringGrid.getVäli();
-                    //uus[rida][veerg] = "O";
-                    //playerStringGrid.setVäli(uus);
-                    playerStringGrid.uuendaVäli(rida,veerg,false);
+                    playerStringGrid.uuendaVäli(rida, veerg, false);
                     System.out.println("Vaenlane lasi mööda!");
                     playerGridPane.add(imageViewM, veerg, rida);
                     break;
@@ -264,5 +270,74 @@ public class GraafilineLiides extends Application {
             }
         }
         return väli;
+    }
+
+    public GridPane arvutiRuudustik(int numRows, int numCols) throws FileNotFoundException {
+        Image algne = new Image(new FileInputStream("IMG_0123.PNG"));
+        GridPane gridPane = new GridPane();
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols; col++) {
+                ImageView imageView = new ImageView(algne);
+                imageView.setFitWidth(50);
+                imageView.setFitHeight(50);
+                gridPane.add(imageView, col, row);
+            }
+        }
+        return gridPane;
+    }
+
+    public void lasePlayer() throws FileNotFoundException {
+        Image möödas = new Image(new FileInputStream("IMG_0125.PNG"));
+        Image pihtas = new Image(new FileInputStream("IMG_0126.PNG"));
+        for (Node node : pcGridPane.getChildren()) {
+            node.setOnMouseClicked(event -> {
+                int rida = GridPane.getRowIndex(node);
+                int veerg = GridPane.getColumnIndex(node);
+                if (pcStringGrid.getVäli()[rida][veerg].equals(".")) {
+                    if (pcBooleanGrid.pihtaMööda(rida, veerg)) {
+                        pcStringGrid.uuendaVäli(rida, veerg, true);
+                        System.out.println("Lasid pihta!");
+                        ImageView imageViewP = new ImageView(pihtas);
+                        imageViewP.setFitWidth(50);
+                        imageViewP.setFitHeight(50);
+                        pcGridPane.add(imageViewP, veerg, rida);
+                        pcPaateJärel--;
+                    } else {
+                        pcStringGrid.uuendaVäli(rida, veerg, false);
+                        System.out.println("Lasid mööda!");
+                        ImageView imageViewM = new ImageView(möödas);
+                        imageViewM.setFitWidth(50);
+                        imageViewM.setFitHeight(50);
+                        pcGridPane.add(imageViewM, veerg, rida);
+                    }
+                    if (playerPaateJärel > 0 && pcPaateJärel > 0) {
+                        try {
+                            punkt(100);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        try {
+                            lasePC();
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    else
+                        if (playerPaateJärel == 0)
+                            showEndPC();
+                        else
+                            showEndPlayer();
+                }
+            });
+        }
+    }
+    public static void  punkt(int aeg) throws InterruptedException {
+        Thread.sleep(aeg);
+        System.out.print(". ");
+        Thread.sleep(aeg);
+        System.out.print(". ");
+        Thread.sleep(aeg);
+        System.out.println(". ");
+        Thread.sleep(aeg);
     }
 }
