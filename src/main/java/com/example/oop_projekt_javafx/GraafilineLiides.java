@@ -185,7 +185,7 @@ public class GraafilineLiides extends Application {
             playerRuudustik = false;
             showKüsiVäärtused();
         });
-        vBox.getChildren().addAll(label, button, pilt);
+        vBox.getChildren().addAll(pilt, label, button);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -206,7 +206,7 @@ public class GraafilineLiides extends Application {
             playerRuudustik = false;
             showKüsiVäärtused();
         });
-        vBox.getChildren().addAll(label, button, pilt);
+        vBox.getChildren().addAll(pilt, label, button);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
