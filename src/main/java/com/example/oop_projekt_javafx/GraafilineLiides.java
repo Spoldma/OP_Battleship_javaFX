@@ -66,7 +66,7 @@ public class GraafilineLiides extends Application {
 
         vBox.getChildren().addAll(labelVäli, field1);
 
-        Button button1 = new Button("Next");
+        Button button1 = new Button("OK");
 
         button1.setOnAction(e -> {
             if (field1.getText().matches("\\d+") && 2<=Integer.parseInt(field1.getText()) && Integer.parseInt(field1.getText())<=8) {
@@ -78,7 +78,7 @@ public class GraafilineLiides extends Application {
                 labelPaadid.setTextFill(Color.WHITE);
                 labelPaadid.setAlignment(Pos.CENTER);
                 vBox.getChildren().addAll(labelPaadid, field2);
-                Button button2 = new Button("Start game!");
+                Button button2 = new Button("Alusta mängu!");
                 button2.setOnAction(r -> {
                     if (field2.getText().matches("\\d+") && 1 <= Integer.parseInt(field2.getText()) && Integer.parseInt(field2.getText()) <= maxPaadid) {
                         abiPaatideArv = playerPaateJärel = pcPaateJärel = paatideArv = Integer.parseInt(field2.getText());
@@ -243,11 +243,7 @@ public class GraafilineLiides extends Application {
                                 abiPaatideArv--;
                                 playerBooleanGrid.lisaPaat(GridPane.getRowIndex(imageView), GridPane.getColumnIndex(imageView));
                             }
-
-                            System.out.println("You clicked on the square at row " + GridPane.getRowIndex(imageView) +
-                                    " and column " + GridPane.getColumnIndex(imageView));
                             ImageView clickedImageView = (ImageView) event.getSource();
-
                             clickedImageView.setImage(paat);
                             try {
                                 showPaatidePaigutus();
