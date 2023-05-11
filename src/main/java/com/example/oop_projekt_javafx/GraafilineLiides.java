@@ -28,8 +28,6 @@ public class GraafilineLiides extends Application {
     private int abiPaatideArv;
     private int playerPaateJärel;
     private int pcPaateJärel;
-    private final int MAX_ROWS = 10;
-    private final int MAX_COLS = 10;
     private GridPane playerGridPane;
     private GridPane pcGridPane;
     private MänguVäli playerBooleanGrid;
