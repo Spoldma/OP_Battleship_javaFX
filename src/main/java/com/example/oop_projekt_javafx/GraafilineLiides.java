@@ -168,8 +168,12 @@ public class GraafilineLiides extends Application {
         primaryStage.show();
     }
 
-    private void showEndPC() {
+    private void showEndPC() throws FileNotFoundException {
         VBox vBox = new VBox();
+        Image kaotus = new Image(new FileInputStream("kaotus.jpg"));
+        ImageView pilt = new ImageView(kaotus);
+        //pilt.setFitWidth(200);
+        //pilt.setFitHeight(100);
         vBox.setStyle("-fx-background-color: #5A5A5A;");
         vBox.setAlignment(Pos.CENTER);
         Scene scene = new Scene(vBox, 400, 400);
@@ -181,12 +185,16 @@ public class GraafilineLiides extends Application {
             playerRuudustik = false;
             showKüsiVäärtused();
         });
-        vBox.getChildren().addAll(label, button);
+        vBox.getChildren().addAll(label, button, pilt);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    private void showEndPlayer() {
+    private void showEndPlayer() throws FileNotFoundException {
         VBox vBox = new VBox();
+        Image voit = new Image(new FileInputStream("voit.jpg"));
+        ImageView pilt = new ImageView(voit);
+        pilt.setFitWidth(100);
+        pilt.setFitHeight(100);
         vBox.setStyle("-fx-background-color: #5A5A5A;");
         vBox.setAlignment(Pos.CENTER);
         Scene scene = new Scene(vBox, 400, 400);
@@ -198,7 +206,7 @@ public class GraafilineLiides extends Application {
             playerRuudustik = false;
             showKüsiVäärtused();
         });
-        vBox.getChildren().addAll(label, button);
+        vBox.getChildren().addAll(label, button, pilt);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -360,10 +368,20 @@ public class GraafilineLiides extends Application {
                         }
                     }
                     else
-                        if (playerPaateJärel == 0)
-                            showEndPC();
-                        else
-                            showEndPlayer();
+                        if (playerPaateJärel == 0) {
+                            try {
+                                showEndPC();
+                            } catch (FileNotFoundException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        else {
+                            try {
+                                showEndPlayer();
+                            } catch (FileNotFoundException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
                 }
             });
         }
