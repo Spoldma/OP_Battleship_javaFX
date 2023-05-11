@@ -308,7 +308,7 @@ public class GraafilineLiides extends Application {
     }
 
     public GridPane arvutiRuudustik(int numRows, int numCols) throws FileNotFoundException {
-        Image algne = new Image(new FileInputStream("vaenlane_tava.PNG"));
+        Image algne = new Image(new FileInputStream("IMG_0138.PNG"));
         GridPane gridPane = new GridPane();
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
