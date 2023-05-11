@@ -59,15 +59,20 @@ public class GraafilineLiides extends Application {
         vBox.setStyle("-fx-background-color: #5A5A5A;");
         vBox.setAlignment(Pos.CENTER);
 
-        Label labelVäli = new Label("Sisesta välja suurus (2 - 10):");
+        Label labelVäli = new Label("Sisesta välja suurus (2 - 8):");
         TextField field1 = new TextField();
         labelVäli.setTextFill(Color.WHITE);
 
         vBox.getChildren().addAll(labelVäli, field1);
 
         Button button1 = new Button("Next");
+
         button1.setOnAction(e -> {
-            väljaSuurus = Integer.parseInt(field1.getText());
+            if (field1.getText().matches("\\d+") && 2<=Integer.parseInt(field1.getText()) && Integer.parseInt(field1.getText())<=8) {
+                väljaSuurus = Integer.parseInt(field1.getText());
+            } else {
+                showKüsiVäärtused();
+            }
             int maxPaadid = (int) (Math.pow(väljaSuurus, 2)) - 1;
             Label labelPaadid = new Label("Sisesta paatide arv (1 - " + maxPaadid + "):");
             TextField field2 = new TextField();
