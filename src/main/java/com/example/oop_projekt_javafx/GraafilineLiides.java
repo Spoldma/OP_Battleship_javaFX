@@ -2,6 +2,7 @@ package com.example.oop_projekt_javafx;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -20,7 +23,6 @@ import java.io.FileNotFoundException;
 public class GraafilineLiides extends Application {
 
     private Stage primaryStage;
-    private Stage inputStage;
     private int väljaSuurus;
     private int paatideArv;
     private int abiPaatideArv;
@@ -37,9 +39,6 @@ public class GraafilineLiides extends Application {
     private boolean playerRuudustik = false;
     private boolean pcRuudustik = false;
 
-    public GraafilineLiides() throws FileNotFoundException {
-    }
-
 
     public static void main(String[] args) {
         launch(args);
@@ -48,6 +47,7 @@ public class GraafilineLiides extends Application {
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
         this.primaryStage = primaryStage;
+        primaryStage.setTitle("OP_Battleship");
         showKüsiVäärtused();
 
     }
@@ -56,8 +56,13 @@ public class GraafilineLiides extends Application {
         VBox vBox = new VBox();
         Scene scene = new Scene(vBox, 400, 400);
 
+        vBox.setStyle("-fx-background-color: #5A5A5A;");
+        vBox.setAlignment(Pos.CENTER);
+
         Label labelVäli = new Label("Sisesta välja suurus (2 - 10):");
         TextField field1 = new TextField();
+        labelVäli.setTextFill(Color.WHITE);
+
         vBox.getChildren().addAll(labelVäli, field1);
 
         Button button1 = new Button("Next");
@@ -66,6 +71,7 @@ public class GraafilineLiides extends Application {
             int maxPaadid = (int) (Math.pow(väljaSuurus, 2)) - 1;
             Label labelPaadid = new Label("Sisesta paatide arv (1 - " + maxPaadid + "):");
             TextField field2 = new TextField();
+            labelPaadid.setTextFill(Color.WHITE);
             vBox.getChildren().addAll(labelPaadid, field2);
             Button button2 = new Button("Start game!");
             button2.setOnAction(r -> {
@@ -89,8 +95,13 @@ public class GraafilineLiides extends Application {
         VBox vBox = new VBox();
         Scene scene = new Scene(vBox, 400, 400);
 
+
+        vBox.setStyle("-fx-background-color: #5A5A5A;");
+        vBox.setAlignment(Pos.CENTER);
+
         Label label = new Label("Nüüd pead paigutama paadid oma väljale!" + "\n" +
                 "Paatide paigutamiseks kliki väljal (paate veel paigutada: " + abiPaatideArv + "): ");
+        label.setTextFill(Color.WHITE);
         if (!playerRuudustik) {
             playerGridPane = ruudustik(väljaSuurus, väljaSuurus);
         }
@@ -111,6 +122,10 @@ public class GraafilineLiides extends Application {
         vBox.getChildren().add(button2);
 
         primaryStage.setScene(scene);
+        if (väljaSuurus>6) {
+            primaryStage.setWidth(väljaSuurus*50+200);
+            primaryStage.setHeight(väljaSuurus*50+200);
+        }
         primaryStage.show();
     }
 
@@ -122,7 +137,9 @@ public class GraafilineLiides extends Application {
             pcRuudustik = true;
         }
         VBox vBox = new VBox();
-        Scene scene = new Scene(vBox, 400, 400);
+        Scene scene = new Scene(vBox, 400, väljaSuurus*100+100);
+        vBox.setStyle("-fx-background-color: #5A5A5A;");
+        vBox.setAlignment(Pos.CENTER);
         try {
             pcGridPane = arvutiRuudustik(väljaSuurus, väljaSuurus);
         } catch (FileNotFoundException e) {
@@ -130,7 +147,11 @@ public class GraafilineLiides extends Application {
         }
         Label label = new Label("Mäng algas!" + "\n"
                 + "Üleval on sinu laevad(" + playerPaateJärel + " veel alles) | All on vaenlase laevad (" + pcPaateJärel + " veel alles)"); //ei tööta
+        label.setTextFill(Color.WHITE);
+        vBox.setAlignment(Pos.CENTER);
+        pcGridPane.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(label, playerGridPane, pcGridPane);
+
         vBox.setSpacing(10);
 
         primaryStage.setScene(scene);
@@ -146,8 +167,11 @@ public class GraafilineLiides extends Application {
 
     private void showEndPC() {
         VBox vBox = new VBox();
+        vBox.setStyle("-fx-background-color: #5A5A5A;");
+        vBox.setAlignment(Pos.CENTER);
         Scene scene = new Scene(vBox, 400, 400);
         Label label = new Label("Mäng läbi," + "\n" + "võitis Arvuti!");
+        label.setTextFill(Color.WHITE);
         Button button = new Button("Mängi uuesti?");
         button.setOnAction(r -> {
             pcRuudustik = false;
@@ -160,8 +184,11 @@ public class GraafilineLiides extends Application {
     }
     private void showEndPlayer() {
         VBox vBox = new VBox();
+        vBox.setStyle("-fx-background-color: #5A5A5A;");
+        vBox.setAlignment(Pos.CENTER);
         Scene scene = new Scene(vBox, 400, 400);
         Label label = new Label("Mäng läbi," + "\n" + "võitsid Sina!");
+        label.setTextFill(Color.WHITE);
         Button button = new Button("Mängi uuesti?");
         button.setOnAction(r -> {
             pcRuudustik = false;
@@ -249,6 +276,9 @@ public class GraafilineLiides extends Application {
 
             }
         }
+        if (playerPaateJärel==0){
+            showEndPC();
+        }
     }
 
 
@@ -289,6 +319,7 @@ public class GraafilineLiides extends Application {
     public void lasePlayer() throws FileNotFoundException {
         Image möödas = new Image(new FileInputStream("IMG_0125.PNG"));
         Image pihtas = new Image(new FileInputStream("IMG_0126.PNG"));
+
         for (Node node : pcGridPane.getChildren()) {
             node.setOnMouseClicked(event -> {
                 int rida = GridPane.getRowIndex(node);
@@ -330,6 +361,7 @@ public class GraafilineLiides extends Application {
                 }
             });
         }
+
     }
     public static void  punkt(int aeg) throws InterruptedException {
         Thread.sleep(aeg);
