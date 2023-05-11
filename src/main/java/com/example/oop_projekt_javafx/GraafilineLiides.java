@@ -172,8 +172,8 @@ public class GraafilineLiides extends Application {
         VBox vBox = new VBox();
         Image kaotus = new Image(new FileInputStream("kaotus.jpg"));
         ImageView pilt = new ImageView(kaotus);
-        //pilt.setFitWidth(200);
-        //pilt.setFitHeight(100);
+        pilt.setFitWidth(300);
+        pilt.setFitHeight(200);
         vBox.setStyle("-fx-background-color: #5A5A5A;");
         vBox.setAlignment(Pos.CENTER);
         Scene scene = new Scene(vBox, 400, 400);
@@ -193,8 +193,8 @@ public class GraafilineLiides extends Application {
         VBox vBox = new VBox();
         Image voit = new Image(new FileInputStream("voit.jpg"));
         ImageView pilt = new ImageView(voit);
-        pilt.setFitWidth(100);
-        pilt.setFitHeight(100);
+        pilt.setFitWidth(200);
+        pilt.setFitHeight(200);
         vBox.setStyle("-fx-background-color: #5A5A5A;");
         vBox.setAlignment(Pos.CENTER);
         Scene scene = new Scene(vBox, 400, 400);
