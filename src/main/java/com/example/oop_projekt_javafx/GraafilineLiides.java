@@ -85,7 +85,6 @@ public class GraafilineLiides extends Application {
             vBox.getChildren().add(button2);
         });
         vBox.getChildren().add(button1);
-
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -201,8 +200,8 @@ public class GraafilineLiides extends Application {
     }
 
     private GridPane ruudustik(int numRows, int numCols) throws FileNotFoundException {
-        Image algne = new Image(new FileInputStream("IMG_0123.PNG"));
-        Image pihtas = new Image(new FileInputStream("IMG_0124.PNG"));
+        Image algne = new Image(new FileInputStream("mangija_tava"));
+        Image paat = new Image(new FileInputStream("mangija_paat"));
 
         // Create the GridPane for the matrix
         GridPane gridPane = new GridPane();
@@ -232,7 +231,7 @@ public class GraafilineLiides extends Application {
                                     " and column " + GridPane.getColumnIndex(imageView));
                             ImageView clickedImageView = (ImageView) event.getSource();
 
-                            clickedImageView.setImage(pihtas);
+                            clickedImageView.setImage(paat);
                             try {
                                 showPaatidePaigutus();
                             } catch (FileNotFoundException e) {
@@ -248,8 +247,8 @@ public class GraafilineLiides extends Application {
     }
 
     public void lasePC() throws FileNotFoundException {
-        Image möödas = new Image(new FileInputStream("IMG_0125.PNG"));
-        Image pihtas = new Image(new FileInputStream("IMG_0126.PNG"));
+        Image möödas = new Image(new FileInputStream("mangija_mooda"));
+        Image pihtas = new Image(new FileInputStream("mangija_pihtas"));
         ImageView imageViewM = new ImageView(möödas);
         imageViewM.setFitWidth(50);
         imageViewM.setFitHeight(50);
@@ -303,7 +302,7 @@ public class GraafilineLiides extends Application {
     }
 
     public GridPane arvutiRuudustik(int numRows, int numCols) throws FileNotFoundException {
-        Image algne = new Image(new FileInputStream("IMG_0123.PNG"));
+        Image algne = new Image(new FileInputStream("vaenlane_algne"));
         GridPane gridPane = new GridPane();
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
@@ -317,8 +316,8 @@ public class GraafilineLiides extends Application {
     }
 
     public void lasePlayer() throws FileNotFoundException {
-        Image möödas = new Image(new FileInputStream("IMG_0125.PNG"));
-        Image pihtas = new Image(new FileInputStream("IMG_0126.PNG"));
+        Image möödas = new Image(new FileInputStream("vaenlane_mooda"));
+        Image pihtas = new Image(new FileInputStream("vaenlane_pihtas"));
 
         for (Node node : pcGridPane.getChildren()) {
             node.setOnMouseClicked(event -> {
