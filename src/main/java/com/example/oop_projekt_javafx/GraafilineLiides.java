@@ -135,23 +135,26 @@ public class GraafilineLiides extends Application {
     }
 
     private void showMäng() {
+        Label label = new Label("Mäng algas!" + "\n"
+                + "Üleval on sinu laevad(" + playerPaateJärel + " veel alles) | All on vaenlase laevad ("
+                + pcPaateJärel + " veel alles)"); //ei tööta
         if (!pcRuudustik) {
             pcBooleanGrid = new MänguVäli(teeVäliBoolean(väljaSuurus, paatideArv));
             pcStringGrid = new KuvaVäli(pcBooleanGrid.getVäli());
             playerStringGrid = new KuvaVäli(pcBooleanGrid.getVäli());
+            try {
+                pcGridPane = arvutiRuudustik(väljaSuurus, väljaSuurus);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
             pcRuudustik = true;
         }
         VBox vBox = new VBox();
         Scene scene = new Scene(vBox, 400, väljaSuurus*100+100);
         vBox.setStyle("-fx-background-color: #5A5A5A;");
         vBox.setAlignment(Pos.CENTER);
-        try {
-            pcGridPane = arvutiRuudustik(väljaSuurus, väljaSuurus);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        Label label = new Label("Mäng algas!" + "\n"
-                + "Üleval on sinu laevad(" + playerPaateJärel + " veel alles) | All on vaenlase laevad (" + pcPaateJärel + " veel alles)"); //ei tööta
+
+
         label.setTextFill(Color.WHITE);
         vBox.setAlignment(Pos.CENTER);
         pcGridPane.setAlignment(Pos.CENTER);
@@ -159,15 +162,14 @@ public class GraafilineLiides extends Application {
 
         vBox.setSpacing(10);
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        // Call lasePlayer to allow the player to take a shot
         try {
             lasePlayer();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     private void showEndPC() {
@@ -209,7 +211,6 @@ public class GraafilineLiides extends Application {
         Image algne = new Image(new FileInputStream("mangija_tava.PNG"));
         Image paat = new Image(new FileInputStream("mangija_paat.PNG"));
 
-        // Create the GridPane for the matrix
         GridPane gridPane = new GridPane();
 
         if (!playerRuudustik) {
@@ -271,11 +272,13 @@ public class GraafilineLiides extends Application {
                     System.out.println("Vaenlane lasi pihta!");
                     playerGridPane.add(imageViewP, veerg, rida);
                     playerPaateJärel--;
+                    showMäng();
                     break;
                 } else {
                     playerStringGrid.uuendaVäli(rida, veerg, false);
                     System.out.println("Vaenlane lasi mööda!");
                     playerGridPane.add(imageViewM, veerg, rida);
+                    showMäng();
                     break;
                 }
 
@@ -338,6 +341,7 @@ public class GraafilineLiides extends Application {
                         imageViewP.setFitHeight(50);
                         pcGridPane.add(imageViewP, veerg, rida);
                         pcPaateJärel--;
+                        showMäng();
                     } else {
                         pcStringGrid.uuendaVäli(rida, veerg, false);
                         System.out.println("Lasid mööda!");
@@ -345,6 +349,7 @@ public class GraafilineLiides extends Application {
                         imageViewM.setFitWidth(50);
                         imageViewM.setFitHeight(50);
                         pcGridPane.add(imageViewM, veerg, rida);
+                        showMäng();
                     }
                     if (playerPaateJärel > 0 && pcPaateJärel > 0) {
                         try {
