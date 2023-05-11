@@ -62,6 +62,7 @@ public class GraafilineLiides extends Application {
         Label labelVäli = new Label("Sisesta välja suurus (2 - 8):");
         TextField field1 = new TextField();
         labelVäli.setTextFill(Color.WHITE);
+        labelVäli.setAlignment(Pos.CENTER);
 
         vBox.getChildren().addAll(labelVäli, field1);
 
@@ -75,6 +76,7 @@ public class GraafilineLiides extends Application {
                 Label labelPaadid = new Label("Sisesta paatide arv (1 - " + maxPaadid + "):");
                 TextField field2 = new TextField();
                 labelPaadid.setTextFill(Color.WHITE);
+                labelPaadid.setAlignment(Pos.CENTER);
                 vBox.getChildren().addAll(labelPaadid, field2);
                 Button button2 = new Button("Start game!");
                 button2.setOnAction(r -> {
@@ -107,6 +109,7 @@ public class GraafilineLiides extends Application {
         Label label = new Label("Nüüd pead paigutama paadid oma väljale!" + "\n" +
                 "Paatide paigutamiseks kliki väljal (paate veel paigutada: " + abiPaatideArv + "): ");
         label.setTextFill(Color.WHITE);
+        label.setAlignment(Pos.CENTER);
         if (!playerRuudustik) {
             playerGridPane = ruudustik(väljaSuurus, väljaSuurus);
         }
@@ -152,6 +155,7 @@ public class GraafilineLiides extends Application {
 
 
         label.setTextFill(Color.WHITE);
+        label.setAlignment(Pos.CENTER);
         vBox.setAlignment(Pos.CENTER);
         pcGridPane.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(label, playerGridPane, pcGridPane);
@@ -179,6 +183,7 @@ public class GraafilineLiides extends Application {
         Scene scene = new Scene(vBox, 400, 400);
         Label label = new Label("Mäng läbi," + "\n" + "võitis Arvuti!");
         label.setTextFill(Color.WHITE);
+        label.setAlignment(Pos.CENTER);
         Button button = new Button("Mängi uuesti?");
         button.setOnAction(r -> {
             pcRuudustik = false;
@@ -200,6 +205,7 @@ public class GraafilineLiides extends Application {
         Scene scene = new Scene(vBox, 400, 400);
         Label label = new Label("Mäng läbi," + "\n" + "võitsid Sina!");
         label.setTextFill(Color.WHITE);
+        label.setAlignment(Pos.CENTER);
         Button button = new Button("Mängi uuesti?");
         button.setOnAction(r -> {
             pcRuudustik = false;
