@@ -98,7 +98,7 @@ public class GraafilineLiides extends Application {
     private void showPaatidePaigutus() throws FileNotFoundException {
         // Create the next scene
         VBox vBox = new VBox();
-        Scene scene = new Scene(vBox, 400, 400);
+        Scene scene = new Scene(vBox, väljaSuurus*50+200, väljaSuurus*50+200);
 
 
         vBox.setStyle("-fx-background-color: #5A5A5A;");
@@ -127,10 +127,6 @@ public class GraafilineLiides extends Application {
         vBox.getChildren().add(button2);
 
         primaryStage.setScene(scene);
-        if (väljaSuurus>6) {
-            primaryStage.setWidth(väljaSuurus*50+200);
-            primaryStage.setHeight(väljaSuurus*50+200);
-        }
         primaryStage.show();
     }
 
@@ -150,7 +146,7 @@ public class GraafilineLiides extends Application {
             pcRuudustik = true;
         }
         VBox vBox = new VBox();
-        Scene scene = new Scene(vBox, 400, väljaSuurus*100+100);
+        Scene scene = new Scene(vBox, väljaSuurus*50+200, väljaSuurus*100+200);
         vBox.setStyle("-fx-background-color: #5A5A5A;");
         vBox.setAlignment(Pos.CENTER);
 
