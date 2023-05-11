@@ -70,24 +70,25 @@ public class GraafilineLiides extends Application {
         button1.setOnAction(e -> {
             if (field1.getText().matches("\\d+") && 2<=Integer.parseInt(field1.getText()) && Integer.parseInt(field1.getText())<=8) {
                 väljaSuurus = Integer.parseInt(field1.getText());
-            } else {
-                showKüsiVäärtused();
+
+                int maxPaadid = (int) (Math.pow(väljaSuurus, 2)) - 1;
+                Label labelPaadid = new Label("Sisesta paatide arv (1 - " + maxPaadid + "):");
+                TextField field2 = new TextField();
+                labelPaadid.setTextFill(Color.WHITE);
+                vBox.getChildren().addAll(labelPaadid, field2);
+                Button button2 = new Button("Start game!");
+                button2.setOnAction(r -> {
+                    if (field2.getText().matches("\\d+") && 1 <= Integer.parseInt(field2.getText()) && Integer.parseInt(field2.getText()) <= maxPaadid) {
+                        abiPaatideArv = playerPaateJärel = pcPaateJärel = paatideArv = Integer.parseInt(field2.getText());
+                        try {
+                            showPaatidePaigutus();
+                        } catch (FileNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                });
+                vBox.getChildren().add(button2);
             }
-            int maxPaadid = (int) (Math.pow(väljaSuurus, 2)) - 1;
-            Label labelPaadid = new Label("Sisesta paatide arv (1 - " + maxPaadid + "):");
-            TextField field2 = new TextField();
-            labelPaadid.setTextFill(Color.WHITE);
-            vBox.getChildren().addAll(labelPaadid, field2);
-            Button button2 = new Button("Start game!");
-            button2.setOnAction(r -> {
-                abiPaatideArv = playerPaateJärel = pcPaateJärel = paatideArv = Integer.parseInt(field2.getText());
-                try {
-                    showPaatidePaigutus();
-                } catch (FileNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
-            vBox.getChildren().add(button2);
         });
         vBox.getChildren().add(button1);
         primaryStage.setScene(scene);
