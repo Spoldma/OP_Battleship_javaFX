@@ -200,8 +200,8 @@ public class GraafilineLiides extends Application {
     }
 
     private GridPane ruudustik(int numRows, int numCols) throws FileNotFoundException {
-        Image algne = new Image(new FileInputStream("mangija_tava"));
-        Image paat = new Image(new FileInputStream("mangija_paat"));
+        Image algne = new Image(new FileInputStream("mangija_tava.PNG"));
+        Image paat = new Image(new FileInputStream("mangija_paat.PNG"));
 
         // Create the GridPane for the matrix
         GridPane gridPane = new GridPane();
@@ -247,8 +247,8 @@ public class GraafilineLiides extends Application {
     }
 
     public void lasePC() throws FileNotFoundException {
-        Image möödas = new Image(new FileInputStream("mangija_mooda"));
-        Image pihtas = new Image(new FileInputStream("mangija_pihtas"));
+        Image möödas = new Image(new FileInputStream("mangija_mooda.PNG"));
+        Image pihtas = new Image(new FileInputStream("mangija_pihtas.PNG"));
         ImageView imageViewM = new ImageView(möödas);
         imageViewM.setFitWidth(50);
         imageViewM.setFitHeight(50);
@@ -302,7 +302,7 @@ public class GraafilineLiides extends Application {
     }
 
     public GridPane arvutiRuudustik(int numRows, int numCols) throws FileNotFoundException {
-        Image algne = new Image(new FileInputStream("vaenlane_algne"));
+        Image algne = new Image(new FileInputStream("vaenlane_algne.PNG"));
         GridPane gridPane = new GridPane();
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
@@ -316,8 +316,8 @@ public class GraafilineLiides extends Application {
     }
 
     public void lasePlayer() throws FileNotFoundException {
-        Image möödas = new Image(new FileInputStream("vaenlane_mooda"));
-        Image pihtas = new Image(new FileInputStream("vaenlane_pihtas"));
+        Image möödas = new Image(new FileInputStream("vaenlane_mooda.PNG"));
+        Image pihtas = new Image(new FileInputStream("vaenlane_pihtas.PNG"));
 
         for (Node node : pcGridPane.getChildren()) {
             node.setOnMouseClicked(event -> {
